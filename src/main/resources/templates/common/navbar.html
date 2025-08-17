@@ -1,0 +1,65 @@
+<!-- templates/common/navbar.html -->
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Healthcare</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- Show when user is not logged in -->
+                <li class="nav-item" th:if="${session.user == null}">
+                    <a class="nav-link" th:href="@{/auth/login}">Login</a>
+                </li>
+                <li class="nav-item" th:if="${session.user == null}">
+                    <a class="nav-link" th:href="@{/auth/register}">Register</a>
+                </li>
+
+                <!-- Show when user is a Patient -->
+                <li class="nav-item" th:if="${session.user != null and session.user.role == 'PATIENT'}">
+                    <a class="nav-link" th:href="@{/patient/dashboard}">
+                        <i class="bi bi-person-circle"></i> Patient Dashboard
+                    </a>
+                </li>
+
+                <!-- Show when user is a Doctor -->
+                <li class="nav-item" th:if="${session.user != null and session.user.role == 'DOCTOR'}">
+                    <a class="nav-link" th:href="@{/doctor/dashboard}">
+                        <i class="bi bi-stethoscope"></i> Doctor Dashboard
+                    </a>
+                </li>
+
+                <!-- Show when user is an Admin -->
+                <li class="nav-item" th:if="${session.user != null and session.user.role == 'ADMIN'}">
+                    <a class="nav-link" th:href="@{/admin/dashboard}">
+                        <i class="bi bi-shield-lock"></i> Admin Dashboard
+                    </a>
+                </li>
+
+                <!-- Change Password for all logged-in users -->
+                <li class="nav-item" th:if="${session.user != null}">
+                    <a class="nav-link" th:href="@{/change-password}">
+                        <i class="bi bi-key"></i> Change Password
+                    </a>
+                </li>
+
+                <!-- Welcome message for logged-in users -->
+                <li class="nav-item" th:if="${session.user != null}">
+                    <a class="nav-link disabled" tabindex="-1" aria-disabled="true">
+                        <i class="bi bi-person-check"></i>
+                        <span th:text="'Welcome, ' + ${session.user.name}"></span>
+                    </a>
+                </li>
+
+                <!-- Logout shown to all logged-in users -->
+                <li class="nav-item" th:if="${session.user != null}">
+                    <a class="nav-link" th:href="@{/auth/logout}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

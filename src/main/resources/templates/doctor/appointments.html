@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Appointments</title>
+    <!-- <link rel="stylesheet" th:href="@{/css/style.css}">-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+	   	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Uncomment if you have a navbar fragment -->
+     <div th:replace="~{common/navbar :: navbar}"></div> 
+
+    <div class="container mt-4">
+        <h2>Appointments</h2>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+					<th>Reason</th> <!-- Add this -->
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.patient.name}"></td>
+                <td th:text="${appointment.date}"></td>
+          <td th:text="${appointment.startTime} + ' - ' + ${appointment.endTime}"></td>
+		  <td th:text="${appointment.reason}"></td> <!-- Add this -->
+				 <td th:text="${appointment.status}"></td>
+                <td>
+                    <span th:if="${appointment.status == 'PENDING'}">
+                        <form th:action="@{'/doctor/appointments/' + ${appointment.id} + '/accept'}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-primary btn-sm">Accept</button>
+                        </form>
+                        <form th:action="@{'/doctor/appointments/' + ${appointment.id} + '/reject'}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    </span>
+                    <span th:if="${appointment.status == 'CONFIRMED'}">
+                        <a th:href="@{/doctor/prescriptions/new(appointmentId=${appointment.id})}" class="btn btn-success btn-sm">Prescribe</a>
+                    </span>
+                    <span th:if="${appointment.status == 'REJECTED'}">
+                        No action
+                    </span>
+                    <span th:if="${appointment.status == 'PRESCRIBED'}">
+                        Prescribed
+                    </span>
+                    <span th:if="${appointment.status == 'CANCELLED'}">
+                        Cancelled
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

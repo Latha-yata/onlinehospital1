@@ -1,0 +1,63 @@
+<!-- templates/doctor/dashboard.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .dashboard-card {
+            transition: box-shadow 0.2s;
+        }
+        .dashboard-card:hover {
+            box-shadow: 0 0 10px #007bff33;
+        }
+        .dashboard-icon {
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{common/navbar :: navbar}"></div>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Welcome, Dr. <span th:text="${session.user.name}">Doctor Name</span></h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a href="/doctor/appointments" class="text-decoration-none">
+                    <div class="card dashboard-card text-center shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="dashboard-icon mb-2">&#128197;</div>
+                            <h5 class="card-title">My Appointments</h5>
+                            <p class="card-text text-muted">View and manage all your upcoming appointments.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/doctor/prescriptions" class="text-decoration-none">
+                    <div class="card dashboard-card text-center shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="dashboard-icon mb-2">&#128138;</div>
+                            <h5 class="card-title">Manage Prescriptions</h5>
+                            <p class="card-text text-muted">Create and review prescriptions for your patients.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/doctor/profile" class="text-decoration-none">
+                    <div class="card dashboard-card text-center shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="dashboard-icon mb-2">&#128100;</div>
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text text-muted">Update your personal and professional details.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
